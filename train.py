@@ -83,11 +83,10 @@ class Trainer(object):
                 loss = self.dist_train_step(image, target)
                 train_loss.append(loss.numpy())
                 train_loss_np = np.asarray(train_loss, dtype=np.float32)
-                if step % 100 == 0:
-                    print('=> Epoch {}, Step {},Step Loss {:.5f} Total loss {:.5f}'.format(epoch,
-                                                                                           self.global_step.numpy(),
-                                                                                           loss.numpy(),
-                                                                                           np.mean(train_loss_np)))
+                print('=> Epoch {}, Step {},Step Loss {:.5f} Total loss {:.5f}'.format(epoch,
+                                                                                       self.global_step.numpy(),
+                                                                                       loss.numpy(),
+                                                                                       np.mean(train_loss_np)))
                 with self.log_writer.as_default():
                     tf.summary.scalar('loss', loss, step=self.global_step)
                     tf.summary.scalar('lr', self.optimizer.lr, step=self.global_step)
