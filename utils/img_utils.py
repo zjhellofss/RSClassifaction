@@ -1,3 +1,4 @@
+
 def get_input_image_names(list_names, directory_name, if_train=True):
     list_img = []
     list_msk = []
@@ -37,3 +38,4 @@ def get_input_image_names(list_names, directory_name, if_train=True):
         return list_img, list_msk
     else:
         return list_img, list_test_ids
+
