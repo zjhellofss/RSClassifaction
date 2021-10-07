@@ -88,13 +88,13 @@ class DataLoader(object):
                                                      output_shapes=(
                                                          [self.img_size, self.img_size, 4],
                                                          [self.img_size, self.img_size, 1]))
+            dataset = dataset.repeat().batch(batch_size).prefetch(tf.data.experimental.AUTOTUNE)
+            return dataset
         else:
             dataset = tf.data.Dataset.from_generator(self.data_reader.iter,
                                                      output_types=(tf.float32),
                                                      output_shapes=(
                                                          [self.img_size, self.img_size, 4]))
 
-        dataset = dataset.batch(batch_size).prefetch(tf.data.experimental.AUTOTUNE)
-        return dataset
-
-
+            dataset = dataset.batch(batch_size).prefetch(tf.data.experimental.AUTOTUNE)
+            return dataset
