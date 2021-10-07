@@ -45,13 +45,13 @@ def train():
     train_dataset, valid_dataset = get_dataset()
     train_steps_per_epoch = np.ceil(train_dataset.len / params['batch_size'])
     valid_step_per_epoch = np.ceil(valid_dataset.len / params['batch_size'])
-    warm_steps = params['warmup_epochs'] * train_steps_per_epoch
+    cosine_steps = params['cosine_epochs'] * train_steps_per_epoch
 
     input_row = input_col = params['img_size']
     model = get_model(input_row, input_col)
 
     schedule = tf.keras.experimental.CosineDecay(
-        params['init_learning_rate'], warm_steps, alpha=params['warmup_alpha'])
+        params['init_learning_rate'], cosine_steps, alpha=params['cosine_alpha'])
     optim = Optimizer('adam', schedule=schedule)()
     model.compile(optimizer=optim, loss=jaccard_loss, metrics=[jaccard_loss])
     model_checkpoint = ModelCheckpoint(os.path.join(params['saved_model_dir'], 'Cloud.{epoch:03d}-{val_loss:.6f}.h5'),
